@@ -2,13 +2,21 @@
 
 var http = require("http");
 var express = require('express');
+
+
 require("dotenv").config();
+
+
 
 // Instantiate Express application
 var app = express();
 
+// Include routing in controllers folder
+app.use(require('./controllers'));
+
 // serve static files from /views
 app.use(express.static(__dirname + '/views'));
+app.set('view engine', 'ejs');
 
 // Start server listening
 var port = process.env.PORT || 8080;
@@ -16,9 +24,8 @@ app.listen(port,  function () {
 	console.log('Node.js listening on port ' + port + '...');
 });
 
-console.log(process.env.DOTA_2_KEY);
-
-http.get("http://api.steampowered.com/IDOTA2Match_205790/GetMatchHistory/V001/?key=" + process.env.DOTA_2_KEY, function(res) {
+/*
+http.get("http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?match_id=2360891406&key="+ process.env.DOTA_2_KEY, function(res) {
     
     var output = "";
     
@@ -31,3 +38,4 @@ http.get("http://api.steampowered.com/IDOTA2Match_205790/GetMatchHistory/V001/?k
     });
     
 })
+*/
