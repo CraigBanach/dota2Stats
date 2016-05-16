@@ -1,12 +1,8 @@
 "use strict";
 
-var http = require("http");
 var express = require('express');
 
-
 require("dotenv").config();
-
-
 
 // Instantiate Express application
 var app = express();

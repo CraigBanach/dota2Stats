@@ -1,10 +1,10 @@
 {
-  "name": "chat-example",
-  "version": "0.0.0",
-  "description": "A chat example to showcase how to use `socket.io` with a static `express` server with `async` for control flow.",
+  "name": "dota2stats",
+  "version": "0.0.1",
+  "description": "An application in building that will allow dota 2 users to sign in and view their stats.",
   "main": "server.js",
   "repository": "",
-  "author": "Mostafa Eweda <mo.eweda@gmail.com>",
+  "author": "Craig Banach <craigsb93@gmail.com>",
   "dependencies": {
     "async": "~0.2.8",
     "dotenv": "^2.0.0",
@@ -12,7 +12,6 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "passport": "^0.3.2",
-    "passport-steam": "^1.0.2",
-    "socket.io": "~0.9.14"
+    "passport-steam": "^1.0.2"
   }
 }
