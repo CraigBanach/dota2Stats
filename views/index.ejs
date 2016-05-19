@@ -1,9 +1,35 @@
-<% if (!user) { %>
-	<h2>Welcome! Please log in.</h2>
-	<p><a href="auth/steam">Sign On with Steam</a></p>
-<% } else { %>
-	<h2>Hello, <%= user.displayName %>. - <a href='logout'>Logout</a></h2>
-<% } %>
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-<!-- Should redirect to homepage if you're not logged in -->
-<p><a href="account">See Account Information</a></p>
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+
+<!-- Custom JS -->
+<script src="./index.js"></script>
+
+</head>
+
+<body>
+	<% if (!user) { %>
+		<h2>Welcome! Please log in.</h2>
+		<p><a href="auth/steam"><img src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_large_border.png"></a></p>
+	<% } else { %>
+		<h2>Hello, <%= user.displayName %>. - <a href='logout'>Logout</a></h2>
+		<p><%= JSON.stringify(user) %></p>
+		<p><button id="matchHistory" class="btn btn-primary">Get match history</button></button></p>
+	<% } %>
+	
+	<!-- Should redirect to homepage if you're not logged in -->
+	<p><a href="account">See Account Information</a></p>
+	
+	<script>
+		$("#matchHistory").on("click", getMatchHistory);
+	</script>
+</body>

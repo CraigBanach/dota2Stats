@@ -1,6 +1,7 @@
 "use strict";
 
 var express = require('express');
+var http = require("http");
 
 require("dotenv").config();
 
@@ -8,7 +9,7 @@ require("dotenv").config();
 var app = express();
 
 // Include routing in controllers folder
-app.use(require('./controllers'));
+app.use(require('./controllers/controllers'));
 
 // serve static files from /views
 app.use(express.static(__dirname + '/views'));

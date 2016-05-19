@@ -23,7 +23,6 @@ passport.deserializeUser(function(obj, done) {
 //   Strategies in passport require a `validate` function, which accept
 //   credentials (in this case, an OpenID identifier and profile), and invoke a
 //   callback with a user object.
-console.log(process.env.DOTA_2_KEY);
 
 passport.use(new SteamStrategy({
     returnURL: "https://dota2stats-cragsify.c9users.io/auth/steam/return",
