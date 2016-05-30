@@ -14,14 +14,13 @@ connection.connect(function(err) {
 
   console.log('connected as id ' + connection.threadId);
 });
-/*
+
 module.exports = {
     getConnection : function () {
         if (connection.state == "authenticated") {
             return connection;
         } else {
-            throw ("The application is not connected to the database.")
+            throw ("The application is not connected to the database.");
         }
     }
-}
-*/
+};
