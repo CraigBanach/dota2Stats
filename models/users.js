@@ -9,11 +9,14 @@ module.exports = {
             steamID_32 = steamID_32;
         }
         return new Promise(function(resolve, reject) {
-            connection.query("SELECT * FROM users WHERE steamID_32=? AND registered=1", [steamID_32], function(err, result) {
+            connection.query("SELECT * FROM users WHERE steamID_32=?", [steamID_32], function(err, result) {
               if (err) throw err;
-            
-              if (result.length == 0) {         // if there is nothing in the result (no entry in DB)
-                  reject({steamID_32: steamID_32, username: username});
+
+                // Figure out if the ID exists and describe what needs to be inserted/updated.
+              if (result.length == 0) {
+                  reject({steamID_32: steamID_32, username: username, entryExists: false});
+              } else if (result[0].registered == 0) {
+                  reject({steamID_32: steamID_32, username: username, entryExists: true});
               } else {
                   resolve();
               }
@@ -21,7 +24,6 @@ module.exports = {
         });
     },
     addNewUser: function(steamID_32, username, registered) {
-        console.log(registered);
         var connection = db.getConnection();
         return new Promise(function(resolve, reject) {
             connection.query("INSERT INTO users VALUES (?, ?, ?)", [steamID_32, username, registered], function(err, result) {
@@ -30,5 +32,15 @@ module.exports = {
               resolve();
             });
         });
-    }
+    },
+    updateUser: function(steamID_32, username, registered) {
+        var connection = db.getConnection();
+        return new Promise(function(resolve, reject) {
+            connection.query("UPDATE users SET username=?, registered=? WHERE steamID_32=?", [username, registered, steamID_32], function(err, result) {
+              if (err) throw err;
+            
+              resolve();
+            });
+        });
+    },
 };
