@@ -4,6 +4,7 @@ var SteamStrategy = require("passport-steam").Strategy;
 var express = require("express");
 var router = express.Router();
 var users = require("../models/users");
+var BigNumber = require("bignumber.js");
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -88,9 +89,11 @@ router.get('/auth/steam',
 router.get('/auth/steam/return',
   passport.authenticate('steam', { failureRedirect: '/' }),
   function(req, res) {
-    users.searchForUser(req.user._json.steamid, req.user._json.personaname).then(
+    users.searchForUser(new BigNumber(req.user._json.steamid), req.user._json.personaname).then(
       null,
-      function (data) {users.addNewUser(data.steamID_32, data.username, 1)}
+      function (data) {
+        data.entryExists ? users.updateUser(new BigNumber(data.steamID_32), data.username, 1) : users.addNewUser(data.steamID_32, data.username, 1);
+      }
     ).then(
       res.redirect('/')
     );

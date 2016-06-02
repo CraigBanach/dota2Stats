@@ -3,29 +3,37 @@
 var express = require("express");
 var router = express.Router();
 var request = require("request");
-//var users = require("../models/users");
-var fs = require("fs");
+var matchesDB = require("../models/matches");
+var BigNumber = require("bignumber.js");
 
 router.post("/", function(req, res) {
     console.log("AJAX received");
-    getMatchHistory(req.user._json.steamid);
+    getMatchHistory(new BigNumber(req.user._json.steamid));
     res.send(req.user);
 });
 
 function getMatchHistory(userID) {
     //console.log(userID);
     //console.log(userID - 76561197960265728);
-    userID = userID - 76561197960265728;
-    var url = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=" + process.env.DOTA_2_KEY + "&account_id=" + userID;
+    userID = userID.minus(new BigNumber(process.env.DOUBLELENGTH));
+
+    var url = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=" + process.env.DOTA_2_KEY + "&account_id=" + userID + "&matches_requested=500";
     request(url, function(error, response, body) {
         if (error) console.log(error + "this is an error");
-        //console.log(body);
-        fs.writeFile("File", body, function(err) {
-            if (err) console.log(err);
-            console.log(response.statusCode);
-            console.log(response.statusMessage);
+
+        if (response.statusCode != 200) {
+            console.log("The dota2API returned: \nStatus Code:\t" + response.statusCode + "\nMessage:\t" + response.statusMessage);
+        } else {
+            addNewMatchesToDB(JSON.parse(body).result.matches);
+        }
+    });
+}
+
+function addNewMatchesToDB(matches) {
+    matches.filter(function(match) {
+        matchesDB.findMatch(match.match_id, function(data) {
+            data.length == 0 ? matchesDB.addMatch(match) : null;
         });
-        //console.log("request1");
     });
 }
 
