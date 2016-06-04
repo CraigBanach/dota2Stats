@@ -2,7 +2,6 @@
 
 require("./models/db");
 var express = require('express');
-var http = require("http");
 
 require("dotenv").config();
 

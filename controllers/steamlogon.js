@@ -61,9 +61,21 @@ router.get('/', function(req, res){
   res.render('index', { user: req.user });
 });
 
+/**
+ * Cannot work out how to make this function common to both 
+ * steamlogon.js & matchHistory.js, so for this instance am
+ * violating DRY principles in order to have workign code.
+ */
+ 
+var ensureAuthenticated = function(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/');
+};
+
 router.get('/account', ensureAuthenticated, function(req, res){
   res.render('account', { user: req.user });
 });
+
 
 router.get('/logout', function(req, res){
   req.logout();
@@ -95,13 +107,8 @@ router.get('/auth/steam/return',
         data.entryExists ? users.updateUser(new BigNumber(data.steamID_32), data.username, 1) : users.addNewUser(data.steamID_32, data.username, 1);
       }
     ).then(
-      res.redirect('/')
+      res.redirect('https://dota2stats-cragsify.c9users.io/')
     );
   });
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/');
-}
 
 module.exports = router;

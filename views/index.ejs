@@ -23,13 +23,13 @@
 	<% } else { %>
 		<h2>Hello, <%= user.displayName %>. - <a href='logout'>Logout</a></h2>
 		<p><%= JSON.stringify(user) %></p>
-		<p><button id="matchHistory" class="btn btn-primary">Get match history</button></button></p>
+		<p><button id="getMatchHistory" class="btn btn-primary">Get match history</button><a href="/matchHistory/show" id="showMatchHistory" class="btn btn-primary">Show Match History</a></p>
 	<% } %>
 	
 	<!-- Should redirect to homepage if you're not logged in -->
 	<p><a href="account">See Account Information</a></p>
 	
 	<script>
-		$("#matchHistory").on("click", getMatchHistory);
+		$("#getMatchHistory").on("click", getMatchHistory);
 	</script>
 </body>

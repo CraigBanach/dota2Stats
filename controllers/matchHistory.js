@@ -12,6 +12,21 @@ router.post("/", function(req, res) {
     res.send(req.user);
 });
 
+/**
+ * Cannot work out how to make this function common to both 
+ * steamlogon.js & matchHistory.js, so for this instance am
+ * violating DRY principles in order to have workign code.
+ */
+
+var ensureAuthenticated = function(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/');
+};
+
+router.get("/show", ensureAuthenticated, function(req, res) {
+    res.render("matchHistory.ejs");    
+});
+
 function getMatchHistory(userID) {
     //console.log(userID);
     //console.log(userID - 76561197960265728);
