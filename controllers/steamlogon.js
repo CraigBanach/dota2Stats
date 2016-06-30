@@ -107,7 +107,7 @@ router.get('/auth/steam/return',
         data.entryExists ? users.updateUser(new BigNumber(data.steamID_32), data.username, 1) : users.addNewUser(data.steamID_32, data.username, 1);
       }
     ).then(
-      res.redirect('https://dota2stats-cragsify.c9users.io/')
+      res.redirect('https://dota2stats-cragsify.c9users.io/user/mystats')
     );
   });
 
